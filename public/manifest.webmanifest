@@ -1,0 +1,16 @@
+{
+  "name": "Walking GUIDE01",
+  "short_name": "GUIDE01",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#eef4f1",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

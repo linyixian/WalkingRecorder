@@ -1,0 +1,22 @@
+{
+  "name": "walking-recorder",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "npm --prefix ./vendor/guide01-protocol install && npm --prefix ./vendor/guide01-protocol run build",
+    "dev": "vite --host 0.0.0.0",
+    "prebuild": "npm --prefix ./vendor/guide01-protocol install && npm --prefix ./vendor/guide01-protocol run build",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@guide01/protocol": "file:./vendor/guide01-protocol",
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
+    "typescript": "^5.5.0",
+    "vite": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/web-bluetooth": "^0.0.21"
+  }
+}
