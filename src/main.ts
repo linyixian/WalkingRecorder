@@ -486,15 +486,30 @@ async function connectGuide01(): Promise<void> {
   }
 }
 
-function disconnectGuide01(): void {
+async function disconnectGuide01(): Promise<void> {
+  const ble = guide01Ble;
+  stopGuide01Loop();
+  els.disconnectBtn.disabled = true;
+  els.sendNowBtn.disabled = true;
+
   try {
-    guide01Ble?.disconnect();
+    if (ble?.connected) {
+      log('GUIDE01: closing display...');
+      await ble.closeGifTextPage();
+      log('GUIDE01: display closed');
+    }
+  } catch (error) {
+    console.warn('GUIDE01 display close failed:', error);
+    log(`GUIDE01 display close failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  try {
+    ble?.disconnect();
   } catch (error) {
     console.warn('GUIDE01 disconnect failed:', error);
   }
   guide01Ble = null;
   guide01ConnectedName = '';
-  stopGuide01Loop();
   updateButtons();
   log('GUIDE01 disconnect requested');
 }
@@ -591,7 +606,7 @@ els.startBtn.onclick = () => void startWalk();
 els.pauseBtn.onclick = togglePause;
 els.finishBtn.onclick = finishWalk;
 els.connectBtn.onclick = () => void connectGuide01();
-els.disconnectBtn.onclick = disconnectGuide01;
+els.disconnectBtn.onclick = () => void disconnectGuide01();
 els.autoSendBtn.onclick = () => {
   guide01AutoSend = !guide01AutoSend;
   updateButtons();
