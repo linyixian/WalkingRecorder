@@ -470,7 +470,11 @@ async function connectGuide01(): Promise<void> {
     };
     ble.onTouchEvent = (event) => console.log('GUIDE01 touch:', event);
 
-    guide01ConnectedName = await ble.connect();
+    const relaxedScan = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    log(relaxedScan
+      ? 'GUIDE01: Bluefy/iOS mode. Select GUIDE01 from the device list.'
+      : 'GUIDE01: scanning with manufacturer filter...');
+    guide01ConnectedName = await ble.connect({ relaxedScan });
     guide01Ble = ble;
     log(`GUIDE01 connected: ${guide01ConnectedName}`);
     updateButtons();

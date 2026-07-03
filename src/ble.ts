@@ -32,23 +32,31 @@ export class Guide01Ble {
     return this.server?.connected ?? false;
   }
 
-  async connect(): Promise<string> {
+  async connect(options: { relaxedScan?: boolean } = {}): Promise<string> {
     const filter = this.protocol.scanFilter();
-    const device = await navigator.bluetooth.requestDevice({
-      filters: [
-        {
-          manufacturerData: [
-            { companyIdentifier: filter.id, dataPrefix: filter.data as BufferSource },
-          ],
-        },
-      ],
-      optionalServices: [
+    const optionalServices = [
         this.canonicalUuid(this.uuids.SERVICE),
         this.canonicalUuid(this.uuids.SETTINGS_SERVICE),
         this.canonicalUuid('180a'),
         this.canonicalUuid('180f'),
-      ],
-    });
+    ];
+    const device = await navigator.bluetooth.requestDevice(
+      options.relaxedScan
+        ? {
+            acceptAllDevices: true,
+            optionalServices,
+          }
+        : {
+            filters: [
+              {
+                manufacturerData: [
+                  { companyIdentifier: filter.id, dataPrefix: filter.data as BufferSource },
+                ],
+              },
+            ],
+            optionalServices,
+          },
+    );
 
     this.device = device;
     device.addEventListener('gattserverdisconnected', () => {
