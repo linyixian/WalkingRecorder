@@ -27,7 +27,7 @@ Bluefy / Android Chrome から、PCのLAN IPのHTTPS URLで開いてください
 3. GitHubのリポジトリ画面で `Settings` > `Pages` を開きます。
 4. `Build and deployment` の `Source` を `GitHub Actions` にします。
 5. `main` ブランチへpushすると `.github/workflows/deploy-pages.yml` が実行されます。
-6. 公開URLは `https://<username>.github.io/WalkingRecorder/` になります。
+6. 公開URLは `https://linyixian.github.io/WalkingRecorder/` になります。
 
 Viteの `base` は `./` にしているため、プロジェクトサイトのURLでもそのまま動きます。
 
